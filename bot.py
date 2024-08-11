@@ -4,26 +4,22 @@ from discord.ext import commands
 import pymysql
 import asyncio
 from datetime import datetime, timedelta
-from tabulate import tabulate  # Importer le module tabulate pour un affichage formaté
-from typing import List  # Importation pour les types de retour
+from tabulate import tabulate
+from typing import List
 
-# Initialise le bot avec des intentions spécifiques pour les interactions et les messages
 intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# Votre Token Bot (remplacez cette valeur par votre token réel)
-TOKEN = 'MTI3MDM2MDczNjYzOTYxOTExNQ.G0-Xz-.-FoEbqYPy4HhddxhyYQBdqHdNPIX4OBbyLE-bA'
+TOKEN = 'TOKEN'
 
-# Informations de connexion à la base de données
 DB_HOST = 'mysql1.par1.adky.net'
 DB_PORT = 3306
-DB_USER = 'u19886_CrbcItQqu1'
-DB_PASSWORD = 'rk=b.XyIqAm.EJ8ZIa@yPaHf'  # Remplacez par votre mot de passe
+DB_USER = 'USER'
+DB_PASSWORD = 'PASSWORD'
 DB_NAME = 's19886_Bot'
 
-# Fonction pour se connecter à la base de données
 def connect_to_db():
     return pymysql.connect(
         host=DB_HOST,
@@ -35,7 +31,6 @@ def connect_to_db():
         cursorclass=pymysql.cursors.DictCursor
     )
 
-# Fonction pour récupérer l'ID du salon et l'ID du message
 def get_channel_and_message_id(item_type: str):
     connection = connect_to_db()
     try:
@@ -46,7 +41,6 @@ def get_channel_and_message_id(item_type: str):
     finally:
         connection.close()
 
-# Fonction pour mettre à jour l'ID du message dans la table Message
 def update_message_id(item_type: str, new_message_id):
     connection = connect_to_db()
     try:
@@ -56,27 +50,30 @@ def update_message_id(item_type: str, new_message_id):
     finally:
         connection.close()
 
-# Fonction pour afficher la table "Armes" avec un formatage propre
+async def delete_existing_messages(channel, item_type: str):
+    channel_id, message_id = get_channel_and_message_id(item_type)
+    if channel_id and message_id:
+        try:
+            message = await channel.fetch_message(message_id)
+            await message.delete()
+        except discord.NotFound:
+            pass
+
 async def display_armes_table(channel):
     connection = connect_to_db()
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM Armes")
+            cursor.execute("SELECT Nom, Groupe, AvecP, SansP FROM Armes ORDER BY ID")
             armes = cursor.fetchall()
 
-            # Créer un tableau formaté
             headers = ["Nom", "Groupe", "Avec P", "Sans P"]
             table = [[arme['Nom'], arme['Groupe'] or "-", arme['AvecP'] or "-", arme['SansP'] or "-"] for arme in armes]
 
-            # Ajouter un titre avec la date actuelle
             date_now = datetime.now().strftime('%d/%m/%Y')
             title = f"**Tableau Armes**\n**Date de mise à jour : {date_now}**\n"
             message_content = title + "```" + tabulate(table, headers=headers, tablefmt="grid") + "```"
 
-            # Envoyer le message dans le salon
             sent_message = await channel.send(message_content)
-
-            # Mettre à jour l'ID du message dans la base de données
             update_message_id("Armes", sent_message.id)
     finally:
         connection.close()
@@ -86,22 +83,17 @@ async def display_munitions_table(channel):
     connection = connect_to_db()
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM Munitions")
+            cursor.execute("SELECT Nom, Groupe, Prix, Prix500 FROM Munitions ORDER BY Nom")
             munitions = cursor.fetchall()
 
-            # Créer un tableau formaté
-            headers = ["Nom", "Groupe", "Prix"]
-            table = [[munition['Nom'], munition['Groupe'] or "-", munition['Prix'] or "-"] for munition in munitions]
+            headers = ["Nom", "Groupe", "Prix", "Prix 500"]
+            table = [[munition['Nom'], munition['Groupe'] or "-", munition['Prix'] or "-", munition['Prix500'] or "-"] for munition in munitions]
 
-            # Ajouter un titre avec la date actuelle
             date_now = datetime.now().strftime('%d/%m/%Y')
             title = f"**Tableau Munitions**\n**Date de mise à jour : {date_now}**\n"
             message_content = title + "```" + tabulate(table, headers=headers, tablefmt="grid") + "```"
 
-            # Envoyer le message dans le salon
             sent_message = await channel.send(message_content)
-
-            # Mettre à jour l'ID du message dans la base de données
             update_message_id("Munitions", sent_message.id)
     finally:
         connection.close()
@@ -161,7 +153,7 @@ async def display_ventes_table(channel):
     connection = connect_to_db()
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM Ventes")
+            cursor.execute("SELECT * FROM Ventes ORDER BY Drogue ASC")
             ventes = cursor.fetchall()
 
             # Créer un tableau formaté
@@ -197,6 +189,7 @@ async def on_ready():
         channel_id, _ = get_channel_and_message_id(item_type)
         if channel_id:
             channel = bot.get_channel(channel_id)
+            await delete_existing_messages(channel, item_type)  # Supprimer les anciens messages
             if item_type == "Armes":
                 await display_armes_table(channel)
             elif item_type == "Munitions":
@@ -440,18 +433,19 @@ async def update_armes(
     finally:
         connection.close()
 
-# Commande pour mettre à jour la table Munitions
 @bot.tree.command(name="munitions", description="Met à jour le tableau des munitions")
 @app_commands.describe(
     nom="Le nom de la munition", 
     groupe="Le groupe de la munition", 
-    prix="Le prix de la munition (ex: '50K')"
+    prix="Le prix de la munition (ex: '50K')",
+    prix500="Le prix pour 500 (ex: '200K')"  # Ajout du champ prix500
 )
 async def update_munitions(
     interaction: discord.Interaction, 
     nom: str, 
     groupe: str = None, 
-    prix: str = None  # Changer en str
+    prix: str = None,  # Changer en str
+    prix500: str = None  # Changer en str et ajout du paramètre prix500
 ):
     connection = connect_to_db()
     try:
@@ -463,8 +457,8 @@ async def update_munitions(
             if existing_munition:
                 # Met à jour la munition existante
                 cursor.execute(
-                    "UPDATE Munitions SET Groupe = COALESCE(%s, Groupe), Prix = COALESCE(%s, Prix) WHERE Nom = %s",
-                    (groupe, prix, nom)
+                    "UPDATE Munitions SET Groupe = COALESCE(%s, Groupe), Prix = COALESCE(%s, Prix), Prix500 = COALESCE(%s, Prix500) WHERE Nom = %s",
+                    (groupe, prix, prix500, nom)
                 )
                 connection.commit()
 
