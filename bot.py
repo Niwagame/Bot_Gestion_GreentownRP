@@ -12,13 +12,13 @@ intents.messages = True
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-TOKEN = 'TOKEN'
+TOKEN = 'VOTRE_TOKEN_DISCORD'
 
-DB_HOST = 'mysql1.par1.adky.net'
+DB_HOST = 'VOTRE_HOTE'
 DB_PORT = 3306
-DB_USER = 'USER'
-DB_PASSWORD = 'PASSWORD'
-DB_NAME = 's19886_Bot'
+DB_USER = 'VOTRE_UTILISATEUR'
+DB_PASSWORD = 'VOTRE_MOT_DE_PASSE'
+DB_NAME = 'VOTRE_NOM_DE_BASE_DE_DONNEES'
 
 def connect_to_db():
     return pymysql.connect(
