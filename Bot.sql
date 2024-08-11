@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 07 août 2024 à 18:21
+-- Généré le : dim. 11 août 2024 à 18:16
 -- Version du serveur : 11.3.2-MariaDB-1:11.3.2+maria~deb12
 -- Version de PHP : 7.4.33
 
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Armes` (
+  `ID` int(11) NOT NULL,
   `Nom` varchar(255) NOT NULL,
   `Groupe` varchar(255) DEFAULT NULL,
   `AvecP` varchar(25) DEFAULT NULL,
@@ -38,22 +39,23 @@ CREATE TABLE `Armes` (
 -- Déchargement des données de la table `Armes`
 --
 
-INSERT INTO `Armes` (`Nom`, `Groupe`, `AvecP`, `SansP`) VALUES
-('AKM', NULL, NULL, NULL),
-('AKU', NULL, NULL, NULL),
-('Beretta 96', NULL, NULL, NULL),
-('Canon Scié', NULL, NULL, NULL),
-('Desert-Eagle', NULL, NULL, NULL),
-('Five-Seven', NULL, NULL, NULL),
-('Fn Model 1970', NULL, NULL, NULL),
-('Glock18C', NULL, NULL, NULL),
-('MAC11', NULL, NULL, NULL),
-('Revolver', NULL, NULL, NULL),
-('Scorpion', NULL, NULL, NULL),
-('Tec9', NULL, NULL, NULL),
-('UZI', NULL, NULL, NULL),
-('Walter PPK', NULL, NULL, NULL),
-('Winchester', NULL, NULL, NULL);
+INSERT INTO `Armes` (`ID`, `Nom`, `Groupe`, `AvecP`, `SansP`) VALUES
+(1, 'Arme blanche', 'OBlock', NULL, NULL),
+(2, 'Beretta 96', 'Aztécas', NULL, NULL),
+(3, 'Five-Seven', 'Vagos', '300K', '400K'),
+(4, 'Walter PPK', 'OBlock', NULL, NULL),
+(5, 'Fn Model 1970', NULL, NULL, NULL),
+(6, 'Desert-Eagle', 'HB', '550K', '650K'),
+(7, 'Glock18C', 'Hoover', NULL, NULL),
+(8, 'MAC11', NULL, NULL, NULL),
+(9, 'Revolver', 'MI', NULL, NULL),
+(10, 'Scorpion', NULL, NULL, NULL),
+(11, 'Tec9', 'BMF', NULL, NULL),
+(12, 'UZI', NULL, NULL, NULL),
+(13, 'Winchester', NULL, NULL, NULL),
+(14, 'Canon Scié', NULL, NULL, NULL),
+(15, 'AKM', NULL, NULL, NULL),
+(16, 'AKU', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -62,6 +64,7 @@ INSERT INTO `Armes` (`Nom`, `Groupe`, `AvecP`, `SansP`) VALUES
 --
 
 CREATE TABLE `Drogues` (
+  `ID` int(11) NOT NULL,
   `Nom` varchar(255) NOT NULL,
   `Groupe` varchar(255) DEFAULT NULL,
   `Prix_Unité` varchar(255) DEFAULT NULL,
@@ -73,12 +76,17 @@ CREATE TABLE `Drogues` (
 -- Déchargement des données de la table `Drogues`
 --
 
-INSERT INTO `Drogues` (`Nom`, `Groupe`, `Prix_Unité`, `Prix_100`, `Prix_1000`) VALUES
-('Champignon', NULL, NULL, NULL, NULL),
-('Coke', NULL, NULL, NULL, NULL),
-('Opium', NULL, NULL, NULL, NULL),
-('Oz Kush', NULL, NULL, NULL, NULL),
-('White weedo', NULL, NULL, NULL, NULL);
+INSERT INTO `Drogues` (`ID`, `Nom`, `Groupe`, `Prix_Unité`, `Prix_100`, `Prix_1000`) VALUES
+(1, 'Champignon', NULL, NULL, NULL, NULL),
+(2, 'Graine Champignon', NULL, NULL, NULL, NULL),
+(3, 'Coke', 'Cayo - NY', NULL, NULL, NULL),
+(4, 'Graine Coke', NULL, NULL, NULL, NULL),
+(5, 'OG Kush', 'H-Block', NULL, NULL, NULL),
+(6, 'Graine OG Kush', NULL, NULL, NULL, NULL),
+(7, 'White Widow', 'Harlem Boyz', NULL, NULL, NULL),
+(8, 'Graine White Widow', NULL, NULL, NULL, NULL),
+(9, 'Opium', NULL, NULL, NULL, NULL),
+(16, 'Graine Opium', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -97,11 +105,11 @@ CREATE TABLE `Message` (
 --
 
 INSERT INTO `Message` (`Nom`, `ID_Salon`, `ID_Message`) VALUES
-('Armes', 1270698488228876298, 1270771184929210390),
-('Drogues', 1270753203687784620, 1270771190692053044),
-('Munitions', 1270698488228876298, 1270771187022299136),
-('Outils', 1270776614258479124, NULL),
-('Ventes', 1270776598580297819, NULL);
+('Armes', 1254931410754600961, 1271262066291900487),
+('Drogues', 1270781340865790023, 1271128679874953342),
+('Munitions', 1254931410754600961, 1271128677379473450),
+('Outils', 1270780742414106684, 1271259926257209480),
+('Ventes', 1270781184997326949, 1271128689647685693);
 
 -- --------------------------------------------------------
 
@@ -112,19 +120,20 @@ INSERT INTO `Message` (`Nom`, `ID_Salon`, `ID_Message`) VALUES
 CREATE TABLE `Munitions` (
   `Nom` varchar(255) NOT NULL,
   `Groupe` varchar(255) DEFAULT NULL,
-  `Prix` varchar(255) DEFAULT NULL
+  `Prix` varchar(255) DEFAULT NULL,
+  `Prix500` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `Munitions`
 --
 
-INSERT INTO `Munitions` (`Nom`, `Groupe`, `Prix`) VALUES
-('44 magnum', NULL, NULL),
-('45 ACP', NULL, NULL),
-('7.62', NULL, NULL),
-('9mm', NULL, NULL),
-('Cal 12.', NULL, NULL);
+INSERT INTO `Munitions` (`Nom`, `Groupe`, `Prix`, `Prix500`) VALUES
+('44 magnum', 'BMF', NULL, NULL),
+('45 ACP', NULL, NULL, NULL),
+('7.62', NULL, NULL, NULL),
+('9mm', 'BMF', NULL, NULL),
+('Cal 12.', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -139,6 +148,16 @@ CREATE TABLE `Outils` (
   `Prix_100` varchar(255) DEFAULT NULL,
   `Prix_500` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `Outils`
+--
+
+INSERT INTO `Outils` (`Nom`, `Groupe`, `Prix_Unité`, `Prix_100`, `Prix_500`) VALUES
+('Clé ATM', 'Vagos', NULL, '-', NULL),
+('Clé Fleeca', 'SOA', NULL, NULL, NULL),
+('Crochetage', 'Hoover', '6000', NULL, NULL),
+('Thermites', 'SOA', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -157,8 +176,8 @@ CREATE TABLE `Stock` (
 --
 
 INSERT INTO `Stock` (`id`, `item_name`, `quantity`) VALUES
-(1, 'clé ATM', 81),
-(2, 'crochetage', 218),
+(1, 'clé ATM', 76),
+(2, 'crochetage', 212),
 (3, 'clée de banque', 8),
 (4, 'thermite', 3);
 
@@ -175,6 +194,19 @@ CREATE TABLE `Ventes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Déchargement des données de la table `Ventes`
+--
+
+INSERT INTO `Ventes` (`Nom`, `Groupe`, `Drogue`) VALUES
+('Fête-Foraine', 'Vagos', 'OG Kush'),
+('Grapeseed ', NULL, 'Champignons'),
+('Mirror Park', 'OBlock', 'White Widow'),
+('Paleto', 'HB', 'Champignons'),
+('Plage', 'SouthSide', 'Opium'),
+('Université ', 'OBlock', 'Champignons'),
+('Vinewood', 'BMF', 'Coke');
+
+--
 -- Index pour les tables déchargées
 --
 
@@ -182,13 +214,13 @@ CREATE TABLE `Ventes` (
 -- Index pour la table `Armes`
 --
 ALTER TABLE `Armes`
-  ADD PRIMARY KEY (`Nom`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Index pour la table `Drogues`
 --
 ALTER TABLE `Drogues`
-  ADD PRIMARY KEY (`Nom`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Index pour la table `Message`
@@ -223,6 +255,18 @@ ALTER TABLE `Ventes`
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
+
+--
+-- AUTO_INCREMENT pour la table `Armes`
+--
+ALTER TABLE `Armes`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT pour la table `Drogues`
+--
+ALTER TABLE `Drogues`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `Stock`
