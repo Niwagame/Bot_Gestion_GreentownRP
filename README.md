@@ -1,6 +1,6 @@
 # Greentown RP Project Manager Bot
 
-Ce bot Discord est conçu pour gérer efficacement les projets et les activités sur le serveur Greentown RP. Il permet de gérer les stocks, de synchroniser les informations entre Discord et la base de données, et d'afficher des tableaux mis à jour pour différentes catégories telles que les armes, les munitions, les drogues, les outils, et les ventes.
+Ce bot Discord est conçu pour gérer efficacement les projets et les activités sur le serveur Greentown RP. Il permet de gérer les stocks d'outils comme les clée d'ATM, crochetage etc et de synchroniser les informations entre Discord et la base de données, et d'afficher des tableaux mis à jour pour différentes catégories telles que les armes, les munitions, les drogues, les outils, et les zone de ventes.
 
 ## Fonctionnalités
 
@@ -20,8 +20,8 @@ Ce bot Discord est conçu pour gérer efficacement les projets et les activités
 
 1. Clonez ce dépôt :
     ```bash
-    git clone https://votre-repository.git
-    cd votre-repository
+    git clone https://github.com/Niwagame/Bot_Gestion_GreentownRP
+    cd Bot_Gestion_GreentownRP
     ```
 
 2. Installez les dépendances nécessaires :
@@ -53,10 +53,10 @@ python bot.py
 
 ## Commandes Disponibles
 
-- **!atm** : Démarre un minuteur pour l'activité ATM.
-- **!cam** : Démarre un minuteur pour un cambriolage.
-- **!fle** : Démarre un minuteur pour un braquage de banque Fleeca.
-- **!ent** : Démarre un minuteur pour un entrepôt.
+- **!atm** : Démarre un minuteur pour l'activité ATM. Et enleve 1 **clée ATM** dans la BDD
+- **!cam** : Démarre un minuteur pour un cambriolage. Et enleve 1 **clée ATM** dans la BDD
+- **!fle** : Démarre un minuteur pour un braquage de banque Fleeca. Et enleve 1 **clée de banque** dans la BDD
+- **!ent** : Démarre un minuteur pour un entrepôt. Et enleve 1 **thermite** dans la BDD
 - **!sup** : Démarre un minuteur pour une supérette.
 - **!cf** : Démarre un minuteur pour un coffre-fort.
 - **!bij** : Démarre un minuteur pour une bijouterie.
@@ -72,7 +72,7 @@ Le bot synchronise automatiquement les commandes slash lors de son démarrage. A
 
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une pull request ou à signaler des problèmes.
 
-##Sécurité
+## Sécurité
 
 Ne partagez jamais votre token Discord en ligne. Assurez-vous que vos informations de base de données sont sécurisées.
 
