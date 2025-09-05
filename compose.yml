@@ -1,41 +1,59 @@
 services:
+  db:
+    image: mariadb:11
+    container_name: db
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: greentown
+      MARIADB_USER: botuser
+      MARIADB_PASSWORD: botpass
+      TZ: Europe/Paris
+    volumes:
+      - botrpillegal_db_data:/var/lib/mysql
+      # Tous les fichiers .sql présents ici seront exécutés au 1er démarrage
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "ping", "-uroot", "-prootpass" ]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+    ports:
+      - "3306:3306" # Expose MariaDB en local si besoin
+
   bot:
-    build: .
-    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bot
     depends_on:
       db:
         condition: service_healthy
-    restart: unless-stopped
-
-  db:
-    image: mariadb:11
+    env_file: .env
     environment:
-      - MARIADB_DATABASE=${DB_NAME}
-      - MARIADB_USER=${DB_USER}
-      - MARIADB_PASSWORD=${DB_PASSWORD}
-      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./db/init:/docker-entrypoint-initdb.d:ro
-    healthcheck:
-      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      DB_HOST: db
+      DB_NAME: greentown
+      DB_USER: botuser
+      DB_PASSWORD: botpass
+      TZ: Europe/Paris
+    command: [ "python", "-u", "main.py" ]
     restart: unless-stopped
 
   phpmyadmin:
     image: phpmyadmin:latest
-    environment:
-      - PMA_HOST=db
-      - PMA_USER=${DB_USER}
-      - PMA_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "8080:80"
+    container_name: phpmyadmin
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      PMA_HOST: db
+      PMA_USER: botuser
+      PMA_PASSWORD: botpass
+      UPLOAD_LIMIT: 512M
+      TZ: Europe/Paris
+    ports:
+      - "8080:80"
     restart: unless-stopped
 
 volumes:
-  db_data:
+  botrpillegal_db_data:

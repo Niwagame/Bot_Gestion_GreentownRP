@@ -11,4 +11,4 @@ COPY --from=builder /wheels /wheels
 RUN pip install --no-cache /wheels/*
 COPY . .
 ENV PYTHONUNBUFFERED=1
-CMD ["python", "bot.py"]
+CMD ["python", "main.py"]

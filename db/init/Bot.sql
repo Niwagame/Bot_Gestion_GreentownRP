@@ -1,280 +1,489 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le : dim. 11 août 2024 à 18:16
--- Version du serveur : 11.3.2-MariaDB-1:11.3.2+maria~deb12
--- Version de PHP : 7.4.33
+-- Hôte : db
+-- Généré le : ven. 05 sep. 2025 à 18:26
+-- Version du serveur : 11.8.3-MariaDB-ubu2404
+-- Version de PHP : 8.2.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
 START TRANSACTION;
+
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
+;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */
+;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */
+;
+/*!40101 SET NAMES utf8mb4 */
+;
 
 --
--- Base de données : `s19886_Bot`
+-- Base de données : `greentown`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Armes`
+-- Structure de la table `activeactivities`
 --
 
-CREATE TABLE `Armes` (
-  `ID` int(11) NOT NULL,
-  `Nom` varchar(255) NOT NULL,
-  `Groupe` varchar(255) DEFAULT NULL,
-  `AvecP` varchar(25) DEFAULT NULL,
-  `SansP` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `Armes`
---
-
-INSERT INTO `Armes` (`ID`, `Nom`, `Groupe`, `AvecP`, `SansP`) VALUES
-(1, 'Arme blanche', 'OBlock', NULL, NULL),
-(2, 'Beretta 96', 'Aztécas', NULL, NULL),
-(3, 'Five-Seven', 'Vagos', '300K', '400K'),
-(4, 'Walter PPK', 'OBlock', NULL, NULL),
-(5, 'Fn Model 1970', NULL, NULL, NULL),
-(6, 'Desert-Eagle', 'HB', '550K', '650K'),
-(7, 'Glock18C', 'Hoover', NULL, NULL),
-(8, 'MAC11', NULL, NULL, NULL),
-(9, 'Revolver', 'MI', NULL, NULL),
-(10, 'Scorpion', NULL, NULL, NULL),
-(11, 'Tec9', 'BMF', NULL, NULL),
-(12, 'UZI', NULL, NULL, NULL),
-(13, 'Winchester', NULL, NULL, NULL),
-(14, 'Canon Scié', NULL, NULL, NULL),
-(15, 'AKM', NULL, NULL, NULL),
-(16, 'AKU', NULL, NULL, NULL);
+CREATE TABLE `activeactivities` (
+    `action` varchar(32) NOT NULL,
+    `group_name` varchar(64) NOT NULL,
+    `started_at` datetime NOT NULL,
+    `ends_at` datetime NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Drogues`
+-- Structure de la table `armes`
 --
 
-CREATE TABLE `Drogues` (
-  `ID` int(11) NOT NULL,
-  `Nom` varchar(255) NOT NULL,
-  `Groupe` varchar(255) DEFAULT NULL,
-  `Prix_Unité` varchar(255) DEFAULT NULL,
-  `Prix_100` varchar(255) DEFAULT NULL,
-  `Prix_1000` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `armes` (
+    `ID` int(11) NOT NULL,
+    `Nom` varchar(255) NOT NULL,
+    `Groupe` varchar(255) DEFAULT NULL,
+    `Propre` varchar(25) DEFAULT NULL,
+    `Sale` varchar(25) DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Drogues`
+-- Déchargement des données de la table `armes`
 --
 
-INSERT INTO `Drogues` (`ID`, `Nom`, `Groupe`, `Prix_Unité`, `Prix_100`, `Prix_1000`) VALUES
-(1, 'Champignon', NULL, NULL, NULL, NULL),
-(2, 'Graine Champignon', NULL, NULL, NULL, NULL),
-(3, 'Coke', 'Cayo - NY', NULL, NULL, NULL),
-(4, 'Graine Coke', NULL, NULL, NULL, NULL),
-(5, 'OG Kush', 'H-Block', NULL, NULL, NULL),
-(6, 'Graine OG Kush', NULL, NULL, NULL, NULL),
-(7, 'White Widow', 'Harlem Boyz', NULL, NULL, NULL),
-(8, 'Graine White Widow', NULL, NULL, NULL, NULL),
-(9, 'Opium', NULL, NULL, NULL, NULL),
-(16, 'Graine Opium', NULL, NULL, NULL, NULL);
+INSERT INTO
+    `armes` (
+        `ID`,
+        `Nom`,
+        `Groupe`,
+        `Propre`,
+        `Sale`
+    )
+VALUES (
+        1,
+        'Arme blanche',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        2,
+        'Beretta 96',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        3,
+        'Five-Seven',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        4,
+        'Walter PPK',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        6,
+        'Desert-Eagle',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        7,
+        'Glock18C',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (8, 'MAC11', NULL, NULL, NULL),
+    (
+        9,
+        'Revolver',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        10,
+        'Scorpion',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (11, 'Tec9', NULL, NULL, NULL),
+    (12, 'UZI', NULL, NULL, NULL),
+    (
+        13,
+        'Winchester',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (
+        14,
+        'Canon Scié',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (15, 'AKM', NULL, NULL, NULL),
+    (16, 'AKU', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Message`
+-- Structure de la table `drogues`
 --
 
-CREATE TABLE `Message` (
-  `Nom` varchar(255) NOT NULL,
-  `ID_Salon` bigint(20) DEFAULT NULL,
-  `ID_Message` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `drogues` (
+    `ID` int(11) NOT NULL,
+    `Nom` varchar(255) NOT NULL,
+    `Groupe` varchar(255) DEFAULT NULL,
+    `Propre` varchar(255) DEFAULT NULL,
+    `Sale` varchar(255) DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Message`
+-- Déchargement des données de la table `drogues`
 --
 
-INSERT INTO `Message` (`Nom`, `ID_Salon`, `ID_Message`) VALUES
-('Armes', 1254931410754600961, 1271262066291900487),
-('Drogues', 1270781340865790023, 1271128679874953342),
-('Munitions', 1254931410754600961, 1271128677379473450),
-('Outils', 1270780742414106684, 1271259926257209480),
-('Ventes', 1270781184997326949, 1271128689647685693);
+INSERT INTO
+    `drogues` (
+        `ID`,
+        `Nom`,
+        `Groupe`,
+        `Propre`,
+        `Sale`
+    )
+VALUES (
+        3,
+        'Cocaine',
+        NULL,
+        NULL,
+        NULL
+    ),
+    (5, 'Weed', NULL, NULL, NULL),
+    (9, 'Meth', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Munitions`
+-- Structure de la table `globalcooldowns`
 --
 
-CREATE TABLE `Munitions` (
-  `Nom` varchar(255) NOT NULL,
-  `Groupe` varchar(255) DEFAULT NULL,
-  `Prix` varchar(255) DEFAULT NULL,
-  `Prix500` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `Munitions`
---
-
-INSERT INTO `Munitions` (`Nom`, `Groupe`, `Prix`, `Prix500`) VALUES
-('44 magnum', 'BMF', NULL, NULL),
-('45 ACP', NULL, NULL, NULL),
-('7.62', NULL, NULL, NULL),
-('9mm', 'BMF', NULL, NULL),
-('Cal 12.', NULL, NULL, NULL);
+CREATE TABLE `globalcooldowns` (
+    `action` varchar(32) NOT NULL,
+    `available_at` datetime NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Outils`
+-- Structure de la table `groupdailycounts`
 --
 
-CREATE TABLE `Outils` (
-  `Nom` varchar(255) NOT NULL,
-  `Groupe` varchar(255) DEFAULT NULL,
-  `Prix_Unité` varchar(255) DEFAULT NULL,
-  `Prix_100` varchar(255) DEFAULT NULL,
-  `Prix_500` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `Outils`
---
-
-INSERT INTO `Outils` (`Nom`, `Groupe`, `Prix_Unité`, `Prix_100`, `Prix_500`) VALUES
-('Clé ATM', 'Vagos', NULL, '-', NULL),
-('Clé Fleeca', 'SOA', NULL, NULL, NULL),
-('Crochetage', 'Hoover', '6000', NULL, NULL),
-('Thermites', 'SOA', NULL, NULL, NULL);
+CREATE TABLE `groupdailycounts` (
+    `action` varchar(32) NOT NULL,
+    `group_name` varchar(64) NOT NULL,
+    `day` date NOT NULL,
+    `count` int(11) NOT NULL DEFAULT 0
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Stock`
+-- Structure de la table `message`
 --
 
-CREATE TABLE `Stock` (
-  `id` int(11) NOT NULL,
-  `item_name` varchar(255) NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `message` (
+    `Nom` varchar(255) NOT NULL,
+    `ID_Salon` bigint(20) DEFAULT NULL,
+    `ID_Message` bigint(20) DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Stock`
+-- Déchargement des données de la table `message`
 --
 
-INSERT INTO `Stock` (`id`, `item_name`, `quantity`) VALUES
-(1, 'clé ATM', 76),
-(2, 'crochetage', 212),
-(3, 'clée de banque', 8),
-(4, 'thermite', 3);
+INSERT INTO
+    `message` (
+        `Nom`,
+        `ID_Salon`,
+        `ID_Message`
+    )
+VALUES (
+        'Armes',
+        1410270613498495046,
+        1413560041314717865
+    ),
+    (
+        'Drogues',
+        1410270613498495046,
+        1413560047841316944
+    ),
+    (
+        'Munitions',
+        1410270613498495046,
+        1413560044880138447
+    ),
+    (
+        'Outils',
+        1410270613498495046,
+        1413560050345050144
+    ),
+    (
+        'Visa',
+        1410270613498495046,
+        1413560052446662776
+    );
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Ventes`
+-- Structure de la table `munitions`
 --
 
-CREATE TABLE `Ventes` (
-  `Nom` varchar(255) NOT NULL,
-  `Groupe` varchar(255) DEFAULT NULL,
-  `Drogue` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `munitions` (
+    `Nom` varchar(255) NOT NULL,
+    `Groupe` varchar(255) DEFAULT NULL,
+    `Propre` varchar(255) DEFAULT NULL,
+    `Sale` varchar(25) DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Ventes`
+-- Déchargement des données de la table `munitions`
 --
 
-INSERT INTO `Ventes` (`Nom`, `Groupe`, `Drogue`) VALUES
-('Fête-Foraine', 'Vagos', 'OG Kush'),
-('Grapeseed ', NULL, 'Champignons'),
-('Mirror Park', 'OBlock', 'White Widow'),
-('Paleto', 'HB', 'Champignons'),
-('Plage', 'SouthSide', 'Opium'),
-('Université ', 'OBlock', 'Champignons'),
-('Vinewood', 'BMF', 'Coke');
+INSERT INTO
+    `munitions` (
+        `Nom`,
+        `Groupe`,
+        `Propre`,
+        `Sale`
+    )
+VALUES ('12 gauge', NULL, NULL, NULL),
+    (
+        '22 Long\r\n',
+        NULL,
+        NULL,
+        NULL
+    ),
+    ('38 LC', NULL, NULL, NULL),
+    ('44 Mag', NULL, NULL, NULL),
+    ('45 ACP', NULL, NULL, NULL),
+    (
+        '5.56x45mm\r\n',
+        NULL,
+        NULL,
+        NULL
+    ),
+    ('50 AE', NULL, NULL, NULL),
+    ('7.62x39mm', NULL, NULL, NULL),
+    ('7.62x51mm', NULL, NULL, NULL),
+    ('9mm', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `outils`
+--
+
+CREATE TABLE `outils` (
+    `Nom` varchar(255) NOT NULL,
+    `Groupe` varchar(255) DEFAULT NULL,
+    `Propre` varchar(255) DEFAULT NULL,
+    `Sale` varchar(255) DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `outils`
+--
+
+INSERT INTO
+    `outils` (
+        `Nom`,
+        `Groupe`,
+        `Propre`,
+        `Sale`
+    )
+VALUES (
+        'Clé Fantôme',
+        NULL,
+        NULL,
+        NULL
+    ),
+    ('Corde ATM', NULL, NULL, '-'),
+    (
+        'Crochetage',
+        NULL,
+        NULL,
+        NULL
+    );
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `visas`
+--
+
+CREATE TABLE `visas` (
+    `id` int(11) NOT NULL,
+    `Nom` varchar(255) NOT NULL,
+    `Prenom` varchar(255) NOT NULL,
+    `DateValidite` datetime NOT NULL,
+    `Valide` tinyint(1) NOT NULL DEFAULT 1,
+    `DelivrePar` varchar(255) DEFAULT NULL,
+    `Type` enum(
+        'travaille',
+        'vacances',
+        'autre'
+    ) NOT NULL DEFAULT 'autre',
+    `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+    `UpdatedAt` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `visas`
+--
+
+INSERT INTO
+    `visas` (
+        `id`,
+        `Nom`,
+        `Prenom`,
+        `DateValidite`,
+        `Valide`,
+        `DelivrePar`,
+        `Type`,
+        `CreatedAt`,
+        `UpdatedAt`
+    )
+VALUES (
+        1,
+        'Powell',
+        'Tony',
+        '2025-08-27 21:06:31',
+        0,
+        '05 | Tony Powell',
+        'travaille',
+        '2025-08-27 20:06:31',
+        '2025-08-27 20:09:55'
+    );
 
 --
 -- Index pour les tables déchargées
 --
 
 --
--- Index pour la table `Armes`
+-- Index pour la table `activeactivities`
 --
-ALTER TABLE `Armes`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `activeactivities`
+ADD PRIMARY KEY (
+    `action`,
+    `group_name`,
+    `started_at`
+),
+ADD KEY `idx_active_until` (`ends_at`);
 
 --
--- Index pour la table `Drogues`
+-- Index pour la table `armes`
 --
-ALTER TABLE `Drogues`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `armes`
+ADD PRIMARY KEY (`ID`),
+ADD KEY `idx_armes_nom` (`Nom`);
 
 --
--- Index pour la table `Message`
+-- Index pour la table `drogues`
 --
-ALTER TABLE `Message`
-  ADD PRIMARY KEY (`Nom`);
+ALTER TABLE `drogues`
+ADD PRIMARY KEY (`ID`),
+ADD KEY `idx_drogues_nom` (`Nom`);
 
 --
--- Index pour la table `Munitions`
+-- Index pour la table `globalcooldowns`
 --
-ALTER TABLE `Munitions`
-  ADD PRIMARY KEY (`Nom`);
+ALTER TABLE `globalcooldowns`
+ADD PRIMARY KEY (`action`),
+ADD KEY `idx_available_at` (`available_at`);
 
 --
--- Index pour la table `Outils`
+-- Index pour la table `groupdailycounts`
 --
-ALTER TABLE `Outils`
-  ADD PRIMARY KEY (`Nom`);
+ALTER TABLE `groupdailycounts`
+ADD PRIMARY KEY (`action`, `group_name`, `day`),
+ADD KEY `idx_day` (`day`);
 
 --
--- Index pour la table `Stock`
+-- Index pour la table `message`
 --
-ALTER TABLE `Stock`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `message` ADD PRIMARY KEY (`Nom`);
 
 --
--- Index pour la table `Ventes`
+-- Index pour la table `munitions`
 --
-ALTER TABLE `Ventes`
-  ADD PRIMARY KEY (`Nom`);
+ALTER TABLE `munitions` ADD PRIMARY KEY (`Nom`);
+
+--
+-- Index pour la table `outils`
+--
+ALTER TABLE `outils` ADD PRIMARY KEY (`Nom`);
+
+--
+-- Index pour la table `visas`
+--
+ALTER TABLE `visas`
+ADD PRIMARY KEY (`id`),
+ADD KEY `idx_nom_prenom` (`Nom`, `Prenom`),
+ADD KEY `idx_date_validite` (`DateValidite`),
+ADD KEY `idx_valide` (`Valide`),
+ADD KEY `idx_nom_prenom_date` (
+    `Nom`,
+    `Prenom`,
+    `DateValidite`
+);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT pour la table `Armes`
+-- AUTO_INCREMENT pour la table `armes`
 --
-ALTER TABLE `Armes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+ALTER TABLE `armes`
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 20;
 
 --
--- AUTO_INCREMENT pour la table `Drogues`
+-- AUTO_INCREMENT pour la table `drogues`
 --
-ALTER TABLE `Drogues`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+ALTER TABLE `drogues`
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 17;
 
 --
--- AUTO_INCREMENT pour la table `Stock`
+-- AUTO_INCREMENT pour la table `visas`
 --
-ALTER TABLE `Stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `visas`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 2;
+
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
+;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
+;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
+;
